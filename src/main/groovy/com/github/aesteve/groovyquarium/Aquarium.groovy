@@ -8,12 +8,16 @@ class Aquarium {
 	private Random rand = new Random()
 
 	public Aquarium() {
+		/* We're creating a new method called getRandomMember() on lists */
 		List.metaClass.getRandomMember = {
 			if (delegate.empty) return
 			delegate[rand.nextInt(delegate.size())]
 		}
 	}
 
+	/*
+	 * Convenience methods : operator overloading : + / - to add / remove stuff
+	 */
 	Aquarium plus(Fish fish) {
 		fish.aquarium = this
 		fishes << fish

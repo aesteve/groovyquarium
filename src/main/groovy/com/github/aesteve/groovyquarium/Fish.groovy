@@ -17,7 +17,7 @@ abstract class Fish extends Living {
 	String name
 	Sex sex = Sex.random
 
-	abstract void eat()
+	abstract void eat() // implemented by traits [Carnivorous, Herbivorous]
 
 	boolean isHungry() {
 		health <= 5
@@ -32,7 +32,7 @@ abstract class Fish extends Living {
 
 	@Override
 	// delegates to trait.breed().
-	// the random part is put here so that the breed(other) can be unit tested in a determinist matter
+	// the random part is put here so that the breed(other) can be unit tested in a determinist manner
 	Living breed() {
 		breed aquarium.randomFish
 	}

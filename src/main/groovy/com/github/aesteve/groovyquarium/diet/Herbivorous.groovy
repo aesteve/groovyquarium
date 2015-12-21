@@ -4,6 +4,10 @@ import com.github.aesteve.groovyquarium.Plant
 
 trait Herbivorous {
 
+	/**
+	 * For unit-testing purpose
+	 * @param plant
+	 */
 	void eat(Plant plant) {
 		this.health += 3
 		plant.health -= 2

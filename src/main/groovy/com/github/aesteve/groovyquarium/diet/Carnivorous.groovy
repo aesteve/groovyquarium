@@ -1,10 +1,13 @@
 package com.github.aesteve.groovyquarium.diet
 
-import com.github.aesteve.groovyquarium.Aquarium
 import com.github.aesteve.groovyquarium.Fish
 
 trait Carnivorous {
 
+	/**
+	 * For unit-testing purposes
+	 * @param other
+	 */
 	void eat(Fish other) {
 		other.health -= 4
 		this.health += 5
