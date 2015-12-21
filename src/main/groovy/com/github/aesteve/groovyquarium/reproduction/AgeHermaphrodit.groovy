@@ -4,16 +4,14 @@ import com.github.aesteve.groovyquarium.Aquarium
 import com.github.aesteve.groovyquarium.Fish
 import static com.github.aesteve.groovyquarium.Fish.Sex.*
 
-trait AgeHermaphrodit {
+trait AgeHermaphrodit extends DefaultReproductionRules {
 
-	Fish breed(Aquarium aquarium) {
-		if (this.hungry) return
-		this.sex = this.age <= 10 ? MALE : FEMALE
-		Fish other = aquarium.randomFish this
+	Fish breed(Fish fish) {
+		Fish other = check fish
 		if (!other) return
-		if (other.class != this.class) return
+		this.sex = this.age <= 10 ? MALE : FEMALE
 		if (this.sex == other.sex) return
-		this.class.newInstance()
+		this.giveBirth other
 	}
 
 }

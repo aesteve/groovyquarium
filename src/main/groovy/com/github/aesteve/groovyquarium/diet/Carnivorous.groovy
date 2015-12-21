@@ -10,11 +10,12 @@ trait Carnivorous {
 		this.health += 5
 	}
 
-	void eat(Aquarium aquarium) {
-		Fish other = aquarium.randomFish this
-		if (!other) return
+	void eat() {
+		Fish other = this.aquarium.randomFish
+		if (!other) return // no-one to eat
+		if (other.is(this)) return // cannot eat himself
+		if (other.isPartner(this)) return // cannot eat the same species
 		eat other
-		if (other.dead) aquarium -= fish
 	}
 
 }

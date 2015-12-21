@@ -1,6 +1,5 @@
 package com.github.aesteve.groovyquarium.diet
 
-import com.github.aesteve.groovyquarium.Aquarium
 import com.github.aesteve.groovyquarium.Plant
 
 trait Herbivorous {
@@ -10,11 +9,10 @@ trait Herbivorous {
 		plant.health -= 2
 	}
 
-	void eat(Aquarium aquarium) {
-		Plant plant = aquarium.randomPlant
-		if (!plant) return
+	void eat() {
+		Plant plant = this.aquarium.randomPlant
+		if (!plant) return // no more living plant
 		eat plant
-		if (plant.dead) aquarium -= plant
 	}
 
 }

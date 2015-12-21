@@ -7,12 +7,21 @@ class Aquarium {
 	List<Plant> plants = []
 	private Random rand = new Random()
 
+	public Aquarium() {
+		List.metaClass.getRandomMember = {
+			if (delegate.empty) return
+			delegate[rand.nextInt(delegate.size())]
+		}
+	}
+
 	Aquarium plus(Fish fish) {
+		fish.aquarium = this
 		fishes << fish
 		this
 	}
 
 	Aquarium plus(Plant plant) {
+		plant.aquarium = this
 		plants << plant
 		this
 	}
@@ -27,45 +36,28 @@ class Aquarium {
 		this
 	}
 
-	Fish randomFish(Fish self) {
-		Collection<Fish> eligible = fishes.findAll { it != self }
-		if (eligible.empty) return
-		eligible[rand.nextInt(eligible.size())]
+	List<Fish> getLivingFishes() {
+		fishes.findAll { !it.dead } as List
+	}
+
+	List<Plant> getLivingPlants() {
+		plants.findAll { !it.dead } as List
+	}
+
+	Fish getRandomFish() {
+		livingFishes.randomMember
 	}
 
 	Plant getRandomPlant() {
-		if (plants.empty) return
-		plants[rand.nextInt(plants.size())]
+		livingPlants.randomMember
 	}
 
 	Aquarium next() {
 		round++
-		// everyone grows
-		fishes = fishes.findAll { fish ->
-			fish++
-			!fish.dead
-		}
-		plants = plants.findAll { plant ->
-			plant++
-			!plant.dead
-		}
-		// fishes eat
-		(0..fishes.size()-1).each { // avoid concurrent modification exception
-			fishes[it].eat this
-		}
-		// reproduction
-		if (!fishes.empty) {
-			(0..fishes.size()-1).each { // avoid concurrent modification exception
-				Fish child = fishes[it].breed this
-				if (child) this + child
-			}
-		}
-		if (!plants.empty) {
-			(0..plants.size()-1).each { // avoid concurrent modification exception
-				Plant child = plants[it].breed this
-				if (child) this + child
-			}
-		}
+		(fishes + plants).each { it++ }
+		// remove dead bodies from the aquarium
+		fishes = livingFishes
+		plants = livingPlants
 		println this.toString()
 		this
 	}
@@ -76,5 +68,6 @@ class Aquarium {
 		str += "== round = $round \n"
 		str += "== Plants = $plants \n"
 		str += "== Fishes = $fishes"
+		str
 	}
 }

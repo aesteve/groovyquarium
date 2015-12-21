@@ -1,8 +1,5 @@
 package com.github.aesteve.groovyquarium
 
-import groovy.transform.CompileStatic
-import groovy.transform.TypeChecked
-
 abstract class Fish extends Living {
 
 	enum Sex {
@@ -16,24 +13,50 @@ abstract class Fish extends Living {
 		}
 	}
 
+	Aquarium aquarium
 	String name
 	Sex sex = Sex.random
 
-	abstract void eat(Aquarium aquarium)
+	abstract void eat()
 
 	boolean isHungry() {
 		health <= 5
 	}
 
-	Living next() {
+	@Override
+	Living grow() {
 		health--
 		age++
 		this
 	}
 
 	@Override
+	// delegates to trait.breed().
+	// the random part is put here so that the breed(other) can be unit tested in a determinist matter
+	Living breed() {
+		breed aquarium.randomFish
+	}
+
+	@Override
+	Living next() {
+		grow()
+		eat()
+		def child = breed()
+		if (child) aquarium + child
+		this
+	}
+
+	boolean isPartner(Fish other) {
+		this.class == other.class
+	}
+
+	Fish giveBirth(Fish other) {
+		this.class.newInstance([aquarium: aquarium, name: "Child of ${this.name},${other.name}"])
+	}
+
+	@Override
 	public String toString() {
-		return "\n==== Fish [age=$age , health=$health (race=${this.class.canonicalName})]"
+		return "\n==== Fish [age=$age , health=$health , name=${name} (race=${this.class.name})]"
 	}
 
 }

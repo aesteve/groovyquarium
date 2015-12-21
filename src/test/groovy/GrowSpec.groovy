@@ -11,7 +11,7 @@ class GrowSpec extends Specification {
 
 	def "plants earn 1HP per turn"(){
 		given:
-		plant++
+		plant.grow()
 
 		expect:
 		plant.age == 1
@@ -23,7 +23,7 @@ class GrowSpec extends Specification {
 
 	def "fishes lose 1HP per turn"(){
 		given:
-		fish++
+		fish.grow()
 
 		expect:
 		fish.age == 1
@@ -34,7 +34,7 @@ class GrowSpec extends Specification {
 
 	def "fishes are not hungry before 5 turns"() {
 		given:
-		4.times { fish++ }
+		4.times { fish.grow() }
 
 		expect:
 		!fish.hungry
@@ -44,7 +44,7 @@ class GrowSpec extends Specification {
 
 	def "fishes are hungry after 5 turns"() {
 		given:
-		5.times { fish++ }
+		5.times { fish.grow() }
 
 		expect:
 		fish.hungry
@@ -54,7 +54,7 @@ class GrowSpec extends Specification {
 
 	def "plants are alive before 20 turns"() {
 		given:
-		19.times { living++ }
+		19.times { living.grow() }
 
 		expect:
 		!living.dead
@@ -65,7 +65,7 @@ class GrowSpec extends Specification {
 
 	def "fishes are alive before 10 turns"() {
 		given:
-		9.times { living++ }
+		9.times { living.grow() }
 
 		expect:
 		!living.dead
@@ -75,7 +75,7 @@ class GrowSpec extends Specification {
 
 	def "a living is dead after 20 turns"() {
 		given:
-		20.times { living++ }
+		20.times { living.grow() }
 
 		expect:
 		living.dead
