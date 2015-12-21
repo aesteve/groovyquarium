@@ -8,7 +8,7 @@ trait MonoSexual extends DefaultReproductionRules {
 		Fish other = check fish
 		if (!other) return
 		if (this.sex == other.sex) return
-		this.giveBirth other
+		this & other
 	}
 
 }

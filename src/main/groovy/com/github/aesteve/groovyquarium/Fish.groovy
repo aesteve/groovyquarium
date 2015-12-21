@@ -50,7 +50,7 @@ abstract class Fish extends Living {
 		this.class == other.class
 	}
 
-	Fish giveBirth(Fish other) {
+	Fish and(Fish other) {
 		this.class.newInstance([aquarium: aquarium, name: "Child of ${this.name},${other.name}"])
 	}
 

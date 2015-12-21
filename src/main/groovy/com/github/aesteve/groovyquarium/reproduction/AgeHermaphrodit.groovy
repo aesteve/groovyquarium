@@ -11,7 +11,7 @@ trait AgeHermaphrodit extends DefaultReproductionRules {
 		if (!other) return
 		this.sex = this.age <= 10 ? MALE : FEMALE
 		if (this.sex == other.sex) return
-		this.giveBirth other
+		this & other
 	}
 
 }

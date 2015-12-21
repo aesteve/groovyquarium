@@ -62,7 +62,7 @@ class Aquarium {
 		// remove dead bodies from the aquarium
 		fishes = livingFishes
 		plants = livingPlants
-		println this.toString()
+		println this as String
 		this
 	}
 

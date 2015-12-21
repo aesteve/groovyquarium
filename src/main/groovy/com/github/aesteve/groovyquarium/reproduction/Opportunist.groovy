@@ -9,7 +9,7 @@ trait Opportunist extends DefaultReproductionRules {
 		Fish other = check fish
 		if (!other) return
 		if (this.sex == other.sex) this.sex.opposite
-		this.giveBirth other
+		this & other
 	}
 
 }
