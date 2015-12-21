@@ -56,6 +56,10 @@ class Aquarium {
 		livingPlants.randomMember
 	}
 
+	boolean isEmpty() {
+		livingFishes.empty && livingPlants.empty
+	}
+
 	Aquarium next() {
 		round++
 		(fishes + plants).each { it++ }
